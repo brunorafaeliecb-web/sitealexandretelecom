@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1775104890930,
+      "tag": "0000_large_morg",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1775104962654,
+      "tag": "0001_clumsy_adam_destine",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1775105893230,
+      "tag": "0002_lazy_morgan_stark",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1775106484495,
+      "tag": "0003_nervous_red_skull",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1775112103205,
+      "tag": "0004_tense_hiroim",
+      "breakpoints": true
+    }
+  ]
+}
