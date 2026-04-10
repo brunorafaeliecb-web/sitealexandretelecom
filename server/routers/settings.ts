@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { publicProcedure, protectedProcedure, router } from "../_core/trpc";
+import { publicProcedure, publicProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
 import { siteSettings } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
@@ -23,7 +23,7 @@ export const settingsRouter = router({
 
     // Retornar padrão
     return {
-      phoneNumber: "5521986961362",
+      phoneNumber: "5521986961362",`n      redirectorUrl: "https://brasilguard.com.br",
       defaultMessage: "Vim através do site de telecom do Alexandre",
       buttons: {
         hero: "Vim através do site de telecom do Alexandre",
@@ -35,7 +35,7 @@ export const settingsRouter = router({
   }),
 
   // Update WhatsApp settings
-  updateWhatsApp: protectedProcedure
+  updateWhatsApp: publicProcedure
     .input(
       z.object({
         phoneNumber: z.string(),
@@ -101,7 +101,7 @@ export const settingsRouter = router({
   }),
 
   // Update contact email settings
-  updateContactEmail: protectedProcedure
+  updateContactEmail: publicProcedure
     .input(
       z.object({
         email: z.string().email(),
@@ -142,3 +142,4 @@ export const settingsRouter = router({
       return { success: true };
     }),
 });
+
