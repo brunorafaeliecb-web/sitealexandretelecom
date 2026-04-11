@@ -10,25 +10,26 @@ export const settingsRouter = router({
     if (!db) throw new Error("Database not available");
     const setting = await db.select().from(siteSettings).where(eq(siteSettings.section, "whatsapp_config")).limit(1);
     
+    // Configurações padrão com o redirecionador IaBrasilguard
     const defaultData = {
       phoneNumber: "5521986961362",
-      redirectorUrl: "https://brasilguard.com.br",
-      defaultMessage: "Vim através da IaBrasilguard",
+      redirectorUrl: "https://brasilguard.com.br", // Link que você quer no botão
+      defaultMessage: "Olá, vim através da IaBrasilguard!",
       buttons: {
         hero: "Falar com IaBrasilguard",
-        plans: "Planos de Internet",
+        plans: "Ver Planos",
         celular: "Planos de Celular",
         streaming: "Streaming",
       },
     };
 
-    return setting.length > 0 && setting[0].content ? { ...defaultData, ...(setting[0].content as object) } : defaultData;
+    return setting.length > 0 && setting[0].content ? { ...defaultData, ...(setting[0].content as any) } : defaultData;
   }),
 
   updateWhatsApp: protectedProcedure
     .input(z.object({
       phoneNumber: z.string(),
-      redirectorUrl: z.string().url().optional(),
+      redirectorUrl: z.string().url(), // Valida se é um link real
       defaultMessage: z.string(),
       buttons: z.record(z.string(), z.string()),
     }))
@@ -36,6 +37,7 @@ export const settingsRouter = router({
       if (ctx.user?.role !== "admin") throw new Error("Não autorizado");
       const db = await getDb();
       const existing = await db.select().from(siteSettings).where(eq(siteSettings.section, "whatsapp_config")).limit(1);
+      
       if (existing.length > 0) {
         await db.update(siteSettings).set({ content: input, updatedBy: ctx.user.id, updatedAt: new Date() }).where(eq(siteSettings.section, "whatsapp_config"));
       } else {
@@ -43,10 +45,4 @@ export const settingsRouter = router({
       }
       return { success: true };
     }),
-    
-  getContactEmail: publicProcedure.query(async () => {
-    const db = await getDb();
-    const setting = await db.select().from(siteSettings).where(eq(siteSettings.section, "contact_email")).limit(1);
-    return setting.length > 0 && setting[0].content ? setting[0].content : { email: "admin@melhoresplanos.net", subject: "Contato Site" };
-  }),
 });
