@@ -31,7 +31,7 @@ function Router() {
 function App() {
   // Inicializar Google Analytics
   // Substitua com seu Measurement ID do Google Analytics
-  useGoogleAnalytics(import.meta.env.VITE_GA_MEASUREMENT_ID || "");
+  // useGoogleAnalytics desativado para evitar erro de URL
 
   return (
     <ErrorBoundary>
